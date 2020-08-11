@@ -1,5 +1,6 @@
 package com.example.airbnbbackend.jwt;
 
+import com.example.airbnbbackend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,14 +18,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = getJwtFromRequest(request);
             if (jwt!=null && jwtService.validateJwtToken(jwt)){
                 String username= jwtService.getUserNameFromJwtToken(jwt);
-                UserDetails userDetails = userService.loadUserByUsername(username);
+                UserDetails userDetails = accountService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );
