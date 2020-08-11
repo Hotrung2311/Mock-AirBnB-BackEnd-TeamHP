@@ -1,7 +1,7 @@
 package com.example.airbnbbackend.services.detail;
 
 import com.example.airbnbbackend.models.Details;
-import com.example.airbnbbackend.repositoies.DetailRepository;
+import com.example.airbnbbackend.repositories.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

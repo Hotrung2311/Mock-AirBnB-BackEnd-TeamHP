@@ -1,7 +1,7 @@
 package com.example.airbnbbackend.services.order;
 
 import com.example.airbnbbackend.models.Orders;
-import com.example.airbnbbackend.repositoies.OrderRepository;
+import com.example.airbnbbackend.repositories.OrderRepository;
 import com.example.airbnbbackend.services.IGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

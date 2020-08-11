@@ -1,4 +1,4 @@
-package com.example.airbnbbackend.repositoies;
+package com.example.airbnbbackend.repositories;
 
 import com.example.airbnbbackend.models.Details;
 import org.springframework.data.jpa.repository.JpaRepository;

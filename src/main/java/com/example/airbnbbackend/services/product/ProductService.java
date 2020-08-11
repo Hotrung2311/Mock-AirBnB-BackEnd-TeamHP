@@ -1,6 +1,7 @@
 package com.example.airbnbbackend.services.product;
 
 import com.example.airbnbbackend.models.Products;
+import com.example.airbnbbackend.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,35 +12,35 @@ import java.util.Optional;
 public class ProductService implements IProductService {
 
     @Autowired
-    ProductService productService;
+    ProductRepository productRepository;
 
     @Override
     public List<Products> findAll() {
-        return productService.findAll();
+        return productRepository.findAll();
     }
 
     @Override
     public Optional<Products> findById(Long id) {
-        return productService.findById(id);
+        return productRepository.findById(id);
     }
 
     @Override
     public Products findByName(String username) {
-        return productService.findByName(username);
+        return productRepository.findByName(username);
     }
 
     @Override
     public Products save(Products products) {
-        return productService.save(products);
+        return productRepository.save(products);
     }
 
     @Override
     public void remove(Long id) {
-        productService.remove(id);
+        productRepository.deleteById(id);
     }
 
     @Override
     public void remove(Products products) {
-        productService.remove(products);
+        productRepository.delete(products);
     }
 }

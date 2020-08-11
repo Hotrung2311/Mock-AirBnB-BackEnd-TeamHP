@@ -1,7 +1,7 @@
 package com.example.airbnbbackend.services.image;
 
 import com.example.airbnbbackend.models.Images;
-import com.example.airbnbbackend.repositoies.ImageRepository;
+import com.example.airbnbbackend.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
