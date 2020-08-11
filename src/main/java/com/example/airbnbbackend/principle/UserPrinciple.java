@@ -1,5 +1,6 @@
 package com.example.airbnbbackend.principle;
 
+import com.example.airbnbbackend.models.Accounts;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,15 +31,15 @@ public class UserPrinciple implements UserDetails {
         this.roles = roles;
     }
 
-    public static UserPrinciple build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName())
+    public static UserPrinciple build(Accounts accounts) {
+        List<GrantedAuthority> authorities = accounts.getRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getRoleName())
         ).collect(Collectors.toList());
 
         return new UserPrinciple(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
+                accounts.getId(),
+                accounts.getUserName(),
+                accounts.getPassword(),
                 authorities
         );
     }

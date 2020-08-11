@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
     @Autowired
-    private com.example.springsecurityjwt.JwtService jwtService;
+    private JwtService jwtService;
     @Autowired
     private UserService userService;
     @Override

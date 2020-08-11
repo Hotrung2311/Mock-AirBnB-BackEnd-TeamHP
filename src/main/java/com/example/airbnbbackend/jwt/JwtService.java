@@ -1,5 +1,6 @@
 package com.example.airbnbbackend.jwt;
 
+import com.example.airbnbbackend.principle.UserPrinciple;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
