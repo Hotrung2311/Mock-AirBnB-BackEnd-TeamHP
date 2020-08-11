@@ -6,12 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Roles {
-
+public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String url;
 
+    @OneToOne
+    private Products products;
 }
