@@ -1,5 +1,9 @@
 package com.example.airbnbbackend.security;
 
+import com.example.airbnbbackend.jwt.JwtAuthenticationFilter;
+import com.example.airbnbbackend.models.Accounts;
+import com.example.airbnbbackend.service.AccountService;
+import com.example.airbnbbackend.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,12 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
     @Bean
-    public UserService userService() {
-        return new UserServiceImpl();
+    public AccountService userService() {
+        return new AccountServiceImpl();
     }
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -53,17 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
     @PostConstruct
     public void init(){
-        List<User> users = (List<User>) userService.findAll();
-        if(users.isEmpty()){
-            User user = new User();
-            user.setUsername("hieu");
-            user.setPassword(passwordEncoder.encode("password"));
-            userService.save(user);
+        List<Accounts> accounts = (List<Accounts>) accountService.findAll();
+        if(accounts.isEmpty()){
+            Accounts accounts1 = new Accounts();
+            accounts1.setUserName("hieu");
+            accounts1.setPassword(passwordEncoder.encode("password"));
+            accountService.save(accounts1);
         }
     }
 
