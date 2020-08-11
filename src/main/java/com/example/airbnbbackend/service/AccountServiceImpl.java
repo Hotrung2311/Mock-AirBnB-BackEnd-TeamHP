@@ -1,0 +1,39 @@
+package com.example.airbnbbackend.service;
+
+import com.example.airbnbbackend.models.Accounts;
+import com.example.airbnbbackend.principle.UserPrinciple;
+import com.example.airbnbbackend.repositories.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import javax.transaction.Transactional;
+
+public class AccountServiceImpl implements AccountService{
+    @Autowired
+    private AccountRepository accountRepository;
+    @Override
+    public void save(Accounts accounts) {
+        accountRepository.save(accounts);
+    }
+
+    @Override
+    public Iterable<Accounts> findAll() {
+        return accountRepository.findAll();
+    }
+
+    @Override
+    public Accounts findAccountByUsername(String username) {
+        return accountRepository.findAccountsByUserName(username);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Accounts accounts = accountRepository.findAccountsByUserName(username);
+        if (accounts == null){
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(accounts);
+    }
+}
