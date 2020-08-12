@@ -24,13 +24,13 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Accounts findAccountByUsername(String username) {
-        return accountRepository.findAccountsByUserName(username);
+        return accountRepository.findAccountsByUsername(username);
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Accounts accounts = accountRepository.findAccountsByUserName(username);
+        Accounts accounts = accountRepository.findAccountsByUsername(username);
         if (accounts == null){
             throw new UsernameNotFoundException(username);
         }

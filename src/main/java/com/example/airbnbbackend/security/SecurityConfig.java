@@ -60,16 +60,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
-//    @PostConstruct
-//    public void init(){
-//        List<Accounts> accounts = (List<Accounts>) accountService.findAll();
-//        if(accounts.isEmpty()){
-//            Accounts accounts1 = new Accounts();
-//            accounts1.setUserName("hieu");
-//            accounts1.setPassword(passwordEncoder.encode("password"));
-//            accountService.save(accounts1);
-//        }
-//    }
+    @PostConstruct
+    public void init(){
+        List<Accounts> accounts = (List<Accounts>) accountService.findAll();
+        if(accounts.isEmpty()){
+            Accounts accounts1 = new Accounts();
+            accounts1.setUsername("hieu");
+            accounts1.setPassword(passwordEncoder.encode("password"));
+            accountService.save(accounts1);
+        }
+    }
 
 
     @Override
