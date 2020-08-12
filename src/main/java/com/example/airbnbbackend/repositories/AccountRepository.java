@@ -4,7 +4,9 @@ import com.example.airbnbbackend.models.Accounts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Accounts,Long> {
-    Accounts findAccountsByUsername(String username);
+    Optional<Accounts> findAccountsByUsername(String username);
 }

@@ -25,6 +25,13 @@ public class JwtResponse {
         this.username=username;
     }
 
+    public JwtResponse(String jwt, Long id, String username, Collection<? extends GrantedAuthority> authorities) {
+        this.token= jwt;
+        this.id =id;
+        this.username=username;
+        this.roles = authorities;
+    }
+
 
     public Long getId() {
         return id;
