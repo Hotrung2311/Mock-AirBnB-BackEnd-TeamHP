@@ -60,24 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
-//    @PostConstruct
-//    public void init(){
-//        List<Accounts> accounts = (List<Accounts>) accountService.findAll();
-//        if(accounts.isEmpty()){
-//            Accounts accounts1 = new Accounts();
-//            accounts1.setUserName("hieu");
-//            accounts1.setPassword(passwordEncoder.encode("password"));
-//            accountService.save(accounts1);
-//        }
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
                 .antMatchers("/",
-                        "/login").permitAll()
+                        "/login","/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

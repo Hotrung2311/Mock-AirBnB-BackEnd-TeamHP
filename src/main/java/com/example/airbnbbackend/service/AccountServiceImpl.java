@@ -8,8 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService{
+
     @Autowired
     private AccountRepository accountRepository;
     @Override
@@ -23,17 +25,17 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Accounts findAccountByUsername(String username) {
-        return accountRepository.findAccountsByUserName(username);
+    public Optional<Accounts> findAccountByUsername(String username) {
+        return accountRepository.findAccountsByUsername(username);
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Accounts accounts = accountRepository.findAccountsByUserName(username);
-        if (accounts == null){
+        Optional<Accounts> accounts = accountRepository.findAccountsByUsername(username);
+        if (!accounts.isPresent()){
             throw new UsernameNotFoundException(username);
         }
-        return UserPrinciple.build(accounts);
+        return UserPrinciple.build(accounts.get());
     }
 }
