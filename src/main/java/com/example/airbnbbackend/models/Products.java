@@ -18,4 +18,7 @@ public class Products {
 
     @OneToOne
     private Details details;
+
+    @ManyToOne
+    private Accounts accounts;
 }

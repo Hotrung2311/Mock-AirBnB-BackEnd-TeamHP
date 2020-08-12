@@ -35,12 +35,12 @@ public class TypeController {
                 .orElseGet(() -> new ResponseEntity<Types>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Types> createNewType(Types types){
         return new ResponseEntity<Types>(typeService.save(types), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Types> updateType(@PathVariable("id") Long id, Types types){
         Optional<Types> optionalTypes = typeService.findById(id);
         return optionalTypes.map(type -> {
@@ -49,7 +49,7 @@ public class TypeController {
         }).orElseGet(()-> new ResponseEntity<Types>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Types> deleteType(@PathVariable("id") Long id) {
         Optional<Types> optionalTypes = typeService.findById(id);
         return optionalTypes.map(types -> {

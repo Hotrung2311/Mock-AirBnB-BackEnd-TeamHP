@@ -34,13 +34,13 @@ public class ImageController {
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Images> createNewImage(@RequestBody Images images){
         Images _images = imageService.save(images);
         return new ResponseEntity<Images>(_images, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Images> updateImage(@PathVariable("id") Long id, Images images){
         Optional<Images> imagesOptional = imageService.findById(id);
         return imagesOptional.map(images1 -> {
@@ -50,7 +50,7 @@ public class ImageController {
         }).orElseGet(()-> new ResponseEntity<Images>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Images> deleteImage(@PathVariable("id") Long id) {
         Optional<Images> imagesOptional = imageService.findById(id);
         return imagesOptional.map(images -> {

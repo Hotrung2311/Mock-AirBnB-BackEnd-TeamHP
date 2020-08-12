@@ -32,12 +32,12 @@ public class DetailController {
                 .orElseGet(() -> new ResponseEntity<Details>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Details> createNewDetail(Details details){
         return new ResponseEntity<Details>(detailService.save(details), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Details> updateDetail(@PathVariable("id") Long id, Details details){
         Optional<Details> optionalDetails = detailService.findById(id);
         return optionalDetails.map(detail -> {
@@ -46,7 +46,7 @@ public class DetailController {
         }).orElseGet(()-> new ResponseEntity<Details>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Details> deleteDetail(@PathVariable("id") Long id) {
         Optional<Details> optionalDetails = detailService.findById(id);
         return optionalDetails.map(details -> {

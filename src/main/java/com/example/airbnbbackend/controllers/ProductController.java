@@ -33,12 +33,12 @@ public class ProductController {
                 .orElseGet(() -> new ResponseEntity<Products>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Products> createNewProduct(Products products){
         return new ResponseEntity<Products>(productService.save(products), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Products> updateProduct(@PathVariable("id") Long id, Products products){
         Optional<Products> optionalProducts = productService.findById(id);
         return optionalProducts.map(product -> {
@@ -47,7 +47,7 @@ public class ProductController {
         }).orElseGet(()-> new ResponseEntity<Products>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Products> deleteProduct(@PathVariable("id") Long id) {
         Optional<Products> optionalProducts = productService.findById(id);
         return optionalProducts.map(products -> {

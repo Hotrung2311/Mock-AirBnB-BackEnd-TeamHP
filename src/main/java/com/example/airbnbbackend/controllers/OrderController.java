@@ -32,12 +32,12 @@ public class OrderController {
                 .orElseGet(() -> new ResponseEntity<Orders>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Orders> createNewDetail(Orders orders){
         return new ResponseEntity<Orders>(orderService.save(orders), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Orders> updateOrder(@PathVariable("id") Long id, Orders orders){
         Optional<Orders> optionalOrders = orderService.findById(id);
         return optionalOrders.map(order -> {
@@ -46,7 +46,7 @@ public class OrderController {
         }).orElseGet(()-> new ResponseEntity<Orders>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Orders> deleteOrder(@PathVariable("id") Long id) {
         Optional<Orders> optionalOrders = orderService.findById(id);
         return optionalOrders.map(orders -> {
