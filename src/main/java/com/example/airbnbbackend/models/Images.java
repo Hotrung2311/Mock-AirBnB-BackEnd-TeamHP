@@ -6,19 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Products {
+public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String location;
-    private Long price;
-    private boolean status;
+    private String url;
 
     @OneToOne
-    private Details details;
-
-    @ManyToOne
-    private Accounts accounts;
+    private Products products;
 }
