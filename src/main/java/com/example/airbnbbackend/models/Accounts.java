@@ -19,7 +19,7 @@ public class Accounts {
     private String phone;
     private Integer age;
     private String address;
-    private String IdNumber;
+    private String idNumber;
     private String passport;
 
     @ManyToMany
