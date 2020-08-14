@@ -17,6 +17,9 @@ public class Account {
     private String accountAddress;
     private String email;
 
+    @ManyToMany
+    private List<Role> roles;
+
     @OneToMany
     private List<Vote> votes;
 
@@ -25,5 +28,9 @@ public class Account {
 
     @OneToMany
     private List<House> housesForRent;
+
+    @OneToMany
+    private List<Order> orders;
+
 
 }

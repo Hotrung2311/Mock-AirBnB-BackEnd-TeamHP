@@ -7,11 +7,12 @@ import java.util.List;
 
 @Entity
 @Data
-public class Bedroom {
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nameCity;
 
     @OneToMany
-    private List<Bed> bedList;
+    private List<House> houses;
 }
