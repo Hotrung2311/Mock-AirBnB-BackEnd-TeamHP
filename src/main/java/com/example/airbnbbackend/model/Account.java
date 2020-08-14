@@ -30,7 +30,7 @@ public class Account {
     private List<House> housesForRent;
 
     @OneToMany
-    private List<Order> orders;
+    private List<Booking> houseOrders;
 
 
 }

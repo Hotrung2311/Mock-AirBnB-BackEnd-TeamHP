@@ -10,10 +10,10 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-public class Order {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp startRentTime;
-    private Timestamp stopRentTime;
+    private Timestamp abctime;
+    private Timestamp xyztime;
 }

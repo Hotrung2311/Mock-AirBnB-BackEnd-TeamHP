@@ -21,7 +21,7 @@ public class House {
     @OneToMany
     private List<Vote> votes;
     @OneToMany
-    private List<Order> orders;
+    private List<Booking> houseOrders;
     @OneToMany
     private List<ImageHouse> imageHouses;
     @OneToMany
