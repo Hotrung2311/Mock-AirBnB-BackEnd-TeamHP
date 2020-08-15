@@ -2,10 +2,8 @@ package com.example.airbnbbackend.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,4 +12,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String roleName;
+    @ManyToMany
+    private List<Account> accountList;
+
+    public Role(long id, String user) {
+        this.id=id;
+        this.roleName=user;
+    }
 }
