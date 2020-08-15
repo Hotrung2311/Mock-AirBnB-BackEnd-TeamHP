@@ -18,19 +18,8 @@ public class Account {
     private String email;
 
     @ManyToMany
+    @JoinTable(name = "account_role",joinColumns = {@JoinColumn(name ="account_id" )},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
-
-    @OneToMany
-    private List<Vote> votes;
-
-    @OneToMany
-    private List<Comment> comments;
-
-    @OneToMany
-    private List<House> housesForRent;
-
-    @OneToMany
-    private List<Booking> houseOrders;
-
 
 }

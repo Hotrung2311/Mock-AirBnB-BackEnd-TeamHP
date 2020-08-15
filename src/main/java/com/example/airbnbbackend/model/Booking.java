@@ -2,10 +2,7 @@ package com.example.airbnbbackend.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -14,6 +11,13 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp abctime;
-    private Timestamp xyztime;
+    private Timestamp startTime;
+    private Timestamp stopTime;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+    @ManyToOne
+    @JoinColumn(name = "house_id")
+    private House house;
 }

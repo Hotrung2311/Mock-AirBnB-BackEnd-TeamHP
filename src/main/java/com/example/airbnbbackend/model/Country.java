@@ -12,6 +12,5 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nameCountry;
-    @OneToMany
-    private List<City> cities;
+
 }

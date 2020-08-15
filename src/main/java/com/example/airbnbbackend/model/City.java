@@ -13,6 +13,7 @@ public class City {
     private Long id;
     private String nameCity;
 
-    @OneToMany
-    private List<House> houses;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 }

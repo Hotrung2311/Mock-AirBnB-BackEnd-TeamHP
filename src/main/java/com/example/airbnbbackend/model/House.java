@@ -16,15 +16,12 @@ public class House {
     private double voteNumber;
     private int numberBathroom;
     private double priceHouse;
-    @OneToMany
-    private List<Comment> comments;
-    @OneToMany
-    private List<Vote> votes;
-    @OneToMany
-    private List<Booking> houseOrders;
-    @OneToMany
-    private List<ImageHouse> imageHouses;
-    @OneToMany
-    private List<Bedroom> bedrooms;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
 }

@@ -11,7 +11,7 @@ public class Bedroom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @OneToMany
-    private List<Bed> bedList;
+    @ManyToOne
+    @JoinColumn(name = "house_id")
+    private House house;
 }

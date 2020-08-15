@@ -12,8 +12,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String roleName;
-    @ManyToMany
-    private List<Account> accountList;
 
     public Role(long id, String user) {
         this.id=id;
