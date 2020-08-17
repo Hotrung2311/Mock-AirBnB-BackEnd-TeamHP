@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Data
+//@Entity
+//@Data
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

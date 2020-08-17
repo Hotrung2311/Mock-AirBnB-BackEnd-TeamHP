@@ -14,8 +14,11 @@ public class House {
     private String address;
     private String nameHouse;
     private double voteNumber;
-    private int numberBathroom;
+    private int bedroom;
+    private int bathroom;
     private double priceHouse;
+    String roomType;
+    String houseType;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
@@ -23,5 +26,7 @@ public class House {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+
 
 }

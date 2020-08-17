@@ -4,14 +4,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
-
-@Entity
-@Data
+//
+//@Entity
+//@Data
 public class Bedroom {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "house_id")
-    private House house;
+//    @ManyToOne
+//    @JoinColumn(name = "house_id")
+//    private House house;
 }
