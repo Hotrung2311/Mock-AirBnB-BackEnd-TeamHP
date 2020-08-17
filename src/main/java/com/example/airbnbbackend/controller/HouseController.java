@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/house")
 @CrossOrigin("*")
 public class HouseController {
     @Autowired
     private HouseService houseService;
     @GetMapping("/")
-    public ResponseEntity<?> getAllHouse(){
+    public ResponseEntity<List<House>> getAllHouse(){
         List<House> houses =houseService.findAll();
         return ResponseEntity.ok(houses);
     }
