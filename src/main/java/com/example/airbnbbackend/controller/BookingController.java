@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,15 +28,42 @@ public class BookingController {
     @Autowired
     private HouseService houseService;
 
-//    @PostMapping("/create")
-//    public ResponseEntity<?> createBooking(@RequestBody Booking booking){
-//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-//        System.out.println(timestamp);
-////        List<Booking> bookings = bookingService.findByHouse_Id();
-////        System.out.println(bookings);
-////        bookingService.save(booking);
-////        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<?> createBooking(@RequestBody Booking booking){
+        int startTimeYear = booking.getStartTime().getYear();
+        int stopTimeYear = booking.getStopTime().getYear();
+        int startTimeDay = booking.getStartTime().getDayOfYear();
+        int stopTimeDay = booking.getStopTime().getDayOfYear();
+        List<Booking> bookings = bookingService.findByHouse_Id(booking.getHouse().getId());
+        LocalDate date = java.time.LocalDate.now();
+        boolean checkTime = false;
+        if (date.getYear() <= booking.getStartTime().getYear()
+        && date.getDayOfYear()<booking.getStartTime().getDayOfYear()){
+            if (startTimeYear==stopTimeYear){
+                if (startTimeDay<stopTimeDay){
+                    for (Booking value : bookings) {
+                        if (startTimeYear == value.getStartTime().getYear()
+                                && stopTimeYear == value.getStopTime().getYear()) {
+                            if ((startTimeDay < value.getStartTime().getDayOfYear() &&
+                                    stopTimeDay < value.getStartTime().getDayOfYear()) ||
+                                    (startTimeDay > value.getStopTime().getDayOfYear() &&
+                                            stopTimeDay > value.getStopTime().getDayOfYear())) {
+                                checkTime = true;
+                            } else {
+                                checkTime = false;
+                                break;
+                            }
+                        } else checkTime = true;
+                    }
+                }
+            }
+        }
+        if (checkTime){
+            bookingService.save(booking);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
    @GetMapping("/host/{id}")
     public ResponseEntity<?> historyBookingForHost(@PathVariable Long id){
