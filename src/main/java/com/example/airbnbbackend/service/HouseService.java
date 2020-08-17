@@ -11,7 +11,8 @@ public interface HouseService {
     void save(House house);
 
     void delete(Long id);
-    List<House> findAllHouse();
+
+    List<House> findAllHouse(Long id);
 
     Optional<House> findById(Long id);
 

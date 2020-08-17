@@ -6,6 +6,7 @@ import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.model.Role;
 import com.example.airbnbbackend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,6 +67,14 @@ public class AccountController {
         }else {
             return (ResponseEntity<?>) ResponseEntity.unprocessableEntity();
         }
-
+    }
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<?> getAccount(@PathVariable Long id){
+        Optional<Account> account = accountService.findById(id);
+        if (account.isPresent()){
+            return ResponseEntity.ok(account.get());
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
