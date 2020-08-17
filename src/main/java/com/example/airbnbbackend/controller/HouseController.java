@@ -11,11 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/house")
 @CrossOrigin("*")
 @RequestMapping("/house")
 public class HouseController {
@@ -37,6 +37,7 @@ public class HouseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @PostMapping("/create")
     public ResponseEntity<?> createHouse(@RequestBody House house){
         Optional<House> house1 = houseService.findByAddress(house.getAddress());
