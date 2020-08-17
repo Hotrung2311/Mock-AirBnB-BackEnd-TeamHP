@@ -22,7 +22,7 @@ public class VoteController {
     private VoteService voteService;
     @Autowired
     private HouseService houseService;
-    @PostMapping("/vote")
+    @PostMapping("/vote/create")
     public ResponseEntity<?> voteHouse(@RequestBody Vote vote){
         Optional<Vote> vote1= voteService.findByAccount_id(vote.getAccount().getId());
 

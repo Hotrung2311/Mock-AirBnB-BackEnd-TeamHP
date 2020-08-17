@@ -13,7 +13,7 @@ public class City {
     private Long id;
     private String nameCity;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+//    @ManyToOne
+//    @JoinColumn(name = "country_id")
+//    private Country country;
 }

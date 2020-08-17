@@ -1,6 +1,10 @@
 package com.example.airbnbbackend.controller;
 
+import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.model.House;
+import com.example.airbnbbackend.model.Role;
+import com.example.airbnbbackend.repositories.AccountRepository;
+import com.example.airbnbbackend.service.AccountService;
 import com.example.airbnbbackend.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,9 +17,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/house")
 @CrossOrigin("*")
+@RequestMapping("/house")
 public class HouseController {
     @Autowired
     private HouseService houseService;
+    @Autowired
+    private AccountService accountService;
     @GetMapping("/")
     public ResponseEntity<List<House>> getAllHouse(){
         List<House> houses =houseService.findAll();
@@ -24,7 +31,11 @@ public class HouseController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getHouseById( @PathVariable Long id){
         Optional<House> house = houseService.findById(id);
-        return house.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (house.isPresent()){
+            return ResponseEntity.ok(house.get());
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     @PostMapping("/create")
     public ResponseEntity<?> createHouse(@RequestBody House house){
@@ -32,6 +43,11 @@ public class HouseController {
         if (house1.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
+            Optional<Account> account = accountService.findById(house.getAccount().getId());
+            List<Role> roles = account.get().getRoles();
+            roles.add(new Role("host"));
+            account.get().setRoles(roles);
+            accountService.save(account.get());
             houseService.save(house);
             return new ResponseEntity<>(HttpStatus.OK);
         }

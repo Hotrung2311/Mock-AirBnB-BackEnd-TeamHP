@@ -42,4 +42,9 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> findAccountByUserName(String username) {
         return accountRepository.findAccountsByUsername(username);
     }
+
+    @Override
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id);
+    }
 }

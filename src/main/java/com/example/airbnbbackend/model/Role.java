@@ -17,4 +17,8 @@ public class Role {
         this.id=id;
         this.roleName=user;
     }
+
+    public Role(String host) {
+        this.roleName=host;
+    }
 }
