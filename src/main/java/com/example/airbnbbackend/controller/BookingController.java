@@ -4,19 +4,14 @@ import com.example.airbnbbackend.model.Booking;
 import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.service.BookingService;
 import com.example.airbnbbackend.service.HouseService;
-import com.example.airbnbbackend.service.impl.BookingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -78,7 +73,7 @@ public class BookingController {
 
    @GetMapping("/{id}")
     public ResponseEntity<?> historyBookingForCustomer(@PathVariable Long id){
-       List<Booking> bookings = bookingService.findByHouse_Id(id);
+       List<Booking> bookings = bookingService.findByAccount_Id(id);
        return ResponseEntity.ok(bookings);
    }
    @PostMapping("/{id}")

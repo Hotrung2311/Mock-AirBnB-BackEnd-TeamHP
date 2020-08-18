@@ -23,4 +23,6 @@ public interface BookingService {
 
     List<Booking> findByHouse_Id(Long id);
 
+    List<Booking> findByAccount_Id(Long id);
+
 }

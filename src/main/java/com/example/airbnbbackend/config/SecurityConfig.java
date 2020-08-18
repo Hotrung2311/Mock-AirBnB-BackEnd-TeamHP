@@ -2,7 +2,9 @@ package com.example.airbnbbackend.config;
 
 import com.example.airbnbbackend.jwt.JwtAuthenticationFilter;
 import com.example.airbnbbackend.model.Account;
+import com.example.airbnbbackend.model.Role;
 import com.example.airbnbbackend.service.AccountService;
+import com.example.airbnbbackend.service.RoleService;
 import com.example.airbnbbackend.service.impl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private RoleService roleService;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -61,16 +65,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
-    @PostConstruct
-    public void init(){
-        List<Account> accounts = (List<Account>) accountService.findAll();
-        if(accounts.isEmpty()){
-            Account account = new Account();
-            account.setUsername("hieu");
-            account.setPassword(passwordEncoder.encode("password"));
-            accountService.save(account);
-        }
-    }
+//    @PostConstruct
+//    public void init(){
+//        List<Account> users = (List<Account>) accountService.findAll();
+//        if(users.isEmpty()){
+//            Account user = new Account();
+//            user.setUsername("hieu");
+//            user.setPassword(passwordEncoder.encode("password"));
+//            accountService.save(user);
+//        }
+//    }
 
 
     @Override
@@ -78,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
                 .antMatchers("/**",
-                        "/login","/booking/create").permitAll()
+                        "/login","/booking/create","/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

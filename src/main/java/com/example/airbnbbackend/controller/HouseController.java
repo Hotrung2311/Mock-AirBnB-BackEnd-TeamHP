@@ -3,7 +3,6 @@ package com.example.airbnbbackend.controller;
 import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.model.Role;
-import com.example.airbnbbackend.repositories.AccountRepository;
 import com.example.airbnbbackend.service.AccountService;
 import com.example.airbnbbackend.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -44,7 +44,10 @@ public class HouseController {
         }else {
             Optional<Account> account = accountService.findById(house.getAccount().getId());
             List<Role> roles = account.get().getRoles();
-            roles.add(new Role("host"));
+            Role role = new Role();
+            role.setId((long) 3);
+            role.setName("host");
+            roles.add(role);
             account.get().setRoles(roles);
             accountService.save(account.get());
             houseService.save(house);
