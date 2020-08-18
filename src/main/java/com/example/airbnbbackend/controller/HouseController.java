@@ -44,12 +44,14 @@ public class HouseController {
         }else {
             Optional<Account> account = accountService.findById(house.getAccount().getId());
             List<Role> roles = account.get().getRoles();
-            Role role = new Role();
-            role.setId((long) 3);
-            role.setName("host");
-            roles.add(role);
-            account.get().setRoles(roles);
-            accountService.save(account.get());
+            if (roles.size()==1){
+                Role role = new Role();
+                role.setId((long) 3);
+                role.setName("host");
+                roles.add(role);
+                account.get().setRoles(roles);
+                accountService.save(account.get());
+            }
             houseService.save(house);
             return new ResponseEntity<>(HttpStatus.OK);
         }
