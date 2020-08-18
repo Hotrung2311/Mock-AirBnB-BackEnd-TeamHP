@@ -17,6 +17,10 @@ public class House {
     private double voteNumber;
     private double priceHouse;
 
+
+    @OneToMany(mappedBy = "house")
+    private List<ImageHouse> imageHouses;
+
     @ManyToMany
     @JoinTable(
             name = "house_house_type",
@@ -42,7 +46,5 @@ public class House {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-
-
 
 }

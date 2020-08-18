@@ -13,4 +13,12 @@ public interface AccountService extends UserDetailsService {
     Account findAccountByUserName(String username);
 
     Optional<Account> findById(Long id);
+
+
+    // bang add
+    ServiceResult updateUser(Account account,String username);
+
+    ServiceResult changePassword(Account account, String checkPassword, String newPassword);
+
+    ServiceResult getByUserName(String username);
 }

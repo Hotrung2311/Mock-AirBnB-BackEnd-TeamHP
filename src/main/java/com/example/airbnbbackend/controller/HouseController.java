@@ -5,6 +5,7 @@ import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.model.Role;
 import com.example.airbnbbackend.service.AccountService;
 import com.example.airbnbbackend.service.HouseService;
+import com.example.airbnbbackend.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,26 +39,34 @@ public class HouseController {
         }
     }
 
+
     @PostMapping("/create")
-    public ResponseEntity<?> createHouse(@RequestBody House house){
-        Optional<House> house1 = houseService.findByAddress(house.getAddress());
-        if (house1.isPresent()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
-            Optional<Account> account = accountService.findById(house.getAccount().getId());
-            List<Role> roles = account.get().getRoles();
-            if (roles.size()==1){
-                Role role = new Role();
-                role.setId((long) 3);
-                role.setName("host");
-                roles.add(role);
-                account.get().setRoles(roles);
-                accountService.save(account.get());
-            }
-            houseService.save(house);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+    public ResponseEntity<ServiceResult> createApartment(@RequestBody House house, Principal principal){
+        System.out.println(house);
+        String username = principal.getName();
+        return new ResponseEntity<ServiceResult>(houseService.createHouse(house,username), HttpStatus.OK);
     }
+
+//    @PostMapping("/create")
+//    public ResponseEntity<?> createHouse(@RequestBody House house){
+//        Optional<House> house1 = houseService.findByAddress(house.getAddress());
+//        if (house1.isPresent()){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }else {
+//            Optional<Account> account = accountService.findById(house.getAccount().getId());
+//            List<Role> roles = account.get().getRoles();
+//            if (roles.size()==1){
+//                Role role = new Role();
+//                role.setId((long) 3);
+//                role.setName("host");
+//                roles.add(role);
+//                account.get().setRoles(roles);
+//                accountService.save(account.get());
+//            }
+//            houseService.save(house);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//    }
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editHouse(@PathVariable Long id){
         Optional<House> house = houseService.findById(id);

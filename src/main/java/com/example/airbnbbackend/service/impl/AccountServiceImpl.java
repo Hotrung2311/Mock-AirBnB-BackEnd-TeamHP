@@ -4,6 +4,7 @@ import com.example.airbnbbackend.jwt.UserPrinciple;
 import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.repositories.AccountRepository;
 import com.example.airbnbbackend.service.AccountService;
+import com.example.airbnbbackend.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,5 +47,23 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id);
+    }
+
+
+    // bang add
+
+    @Override
+    public ServiceResult updateUser(Account account, String username) {
+        return null;
+    }
+
+    @Override
+    public ServiceResult changePassword(Account account, String checkPassword, String newPassword) {
+        return null;
+    }
+
+    @Override
+    public ServiceResult getByUserName(String username) {
+        return null;
     }
 }
