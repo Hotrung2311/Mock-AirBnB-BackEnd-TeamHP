@@ -10,7 +10,7 @@ public interface AccountService extends UserDetailsService {
 
     Iterable<Account> findAll();
 
-    Optional<Account> findAccountByUserName(String username);
+    Account findAccountByUserName(String username);
 
     Optional<Account> findById(Long id);
 }

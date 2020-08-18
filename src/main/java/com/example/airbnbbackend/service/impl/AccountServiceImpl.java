@@ -21,11 +21,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> account = accountRepository.findAccountsByUsername(username);
+        Account account = accountRepository.findAccountsByUsername(username);
         if (account == null){
             throw new UsernameNotFoundException(username);
         }
-        return UserPrinciple.build(account.get());
+        return UserPrinciple.build(account);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> findAccountByUserName(String username) {
+    public Account findAccountByUserName(String username) {
         return accountRepository.findAccountsByUsername(username);
     }
 

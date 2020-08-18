@@ -3,22 +3,16 @@ package com.example.airbnbbackend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
-public class Role {
+public class Role implements Serializable {
+    private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String roleName;
+    private String name;
 
-    public Role(long id, String user) {
-        this.id=id;
-        this.roleName=user;
-    }
-
-    public Role(String host) {
-        this.roleName=host;
-    }
 }
