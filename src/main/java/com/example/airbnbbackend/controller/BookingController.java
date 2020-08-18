@@ -30,34 +30,39 @@ public class BookingController {
         int startTimeDay = booking.getStartTime().getDayOfYear();
         int stopTimeDay = booking.getStopTime().getDayOfYear();
         List<Booking> bookings = bookingService.findByHouse_Id(booking.getHouse().getId());
-        LocalDate date = java.time.LocalDate.now();
-        boolean checkTime = false;
-        if (date.getYear() <= booking.getStartTime().getYear()
-        && date.getDayOfYear()<booking.getStartTime().getDayOfYear()){
-            if (startTimeYear==stopTimeYear){
-                if (startTimeDay<stopTimeDay){
-                    for (Booking value : bookings) {
-                        if (startTimeYear == value.getStartTime().getYear()
-                                && stopTimeYear == value.getStopTime().getYear()) {
-                            if ((startTimeDay < value.getStartTime().getDayOfYear() &&
-                                    stopTimeDay < value.getStartTime().getDayOfYear()) ||
-                                    (startTimeDay > value.getStopTime().getDayOfYear() &&
-                                            stopTimeDay > value.getStopTime().getDayOfYear())) {
-                                checkTime = true;
-                            } else {
-                                checkTime = false;
-                                break;
-                            }
-                        } else checkTime = true;
+        if (bookings.size()!=0){
+            LocalDate date = java.time.LocalDate.now();
+            boolean checkTime = false;
+            if (date.getYear() <= booking.getStartTime().getYear()
+                    && date.getDayOfYear()<booking.getStartTime().getDayOfYear()){
+                if (startTimeYear==stopTimeYear){
+                    if (startTimeDay<stopTimeDay){
+                        for (Booking value : bookings) {
+                            if (startTimeYear == value.getStartTime().getYear()
+                                    && stopTimeYear == value.getStopTime().getYear()) {
+                                if ((startTimeDay < value.getStartTime().getDayOfYear() &&
+                                        stopTimeDay < value.getStartTime().getDayOfYear()) ||
+                                        (startTimeDay > value.getStopTime().getDayOfYear() &&
+                                                stopTimeDay > value.getStopTime().getDayOfYear())) {
+                                    checkTime = true;
+                                } else {
+                                    checkTime = false;
+                                    break;
+                                }
+                            } else checkTime = true;
+                        }
                     }
                 }
             }
+            if (checkTime){
+                bookingService.save(booking);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (checkTime){
-            bookingService.save(booking);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        bookingService.save(booking);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
    @GetMapping("/host/{id}")
