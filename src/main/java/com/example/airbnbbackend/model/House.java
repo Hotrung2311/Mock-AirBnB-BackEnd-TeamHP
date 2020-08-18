@@ -12,29 +12,16 @@ public class House {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nameHouse;
-    private int bedroom;
     private int bathroom;
-    private double voteNumber;
+    private int bedroom;
     private double priceHouse;
-
+    private double voteNumber;
 
     @OneToMany(mappedBy = "house")
     private List<ImageHouse> imageHouses;
 
-    @ManyToMany
-    @JoinTable(
-            name = "house_house_type",
-            joinColumns = @JoinColumn(name = "house_id"),
-            inverseJoinColumns = @JoinColumn(name = "house_type_id"))
-    private List<HouseType> houseTypes;
-
-    @ManyToMany
-    @JoinTable(
-            name = "house_room_type",
-            joinColumns = @JoinColumn(name = "house_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_type_id"))
-    private List<RoomType> roomTypes;
-
+    @OneToMany(mappedBy = "house")
+    private List<Booking> bookings;
 
     @OneToOne(mappedBy = "house")
     private Address address;
@@ -43,8 +30,23 @@ public class House {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+
+    @ManyToMany
+    @JoinTable(
+            name = "house_housetype",
+            joinColumns = @JoinColumn(name = "house_id"),
+            inverseJoinColumns = @JoinColumn(name = "house_type_id"))
+    private List<HouseType> houseTypes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "house_roomtype",
+            joinColumns = @JoinColumn(name = "house_id"),
+            inverseJoinColumns = @JoinColumn(name = "room_type_id"))
+    private List<RoomType> roomTypes;
+
+//    @ManyToOne
+//    @JoinColumn(name = "city_id")
+//    private City city;
 
 }

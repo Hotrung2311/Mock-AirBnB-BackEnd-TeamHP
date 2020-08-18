@@ -114,7 +114,9 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public ServiceResult findAllHouse() {
-        return null;
+        ServiceResult serviceResult = new ServiceResult();
+        serviceResult.setData(houseRepository.findAll());
+        return serviceResult;
     }
 
     @Override

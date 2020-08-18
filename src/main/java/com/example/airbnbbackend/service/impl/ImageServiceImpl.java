@@ -16,7 +16,7 @@ public class ImageServiceImpl implements ImageHouseService {
     @Override
     public ImageHouse findImageByName(String name) {
         return null;
-        //        return imageHouseRepository.findRoleByImageName(name);
+//        return imageHouseRepository.findRoleByImageName(name);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ImageServiceImpl implements ImageHouseService {
 
 
     @Override
-    public ServiceResult createPicture(ImageHouse imageHouse) {
+    public ServiceResult createImage(ImageHouse imageHouse) {
         ServiceResult serviceResult = new ServiceResult();
         serviceResult.setData(imageHouseRepository.save(imageHouse));
         return serviceResult;
@@ -56,7 +56,7 @@ public class ImageServiceImpl implements ImageHouseService {
     }
 
     @Override
-    public ServiceResult deletePicture(Long id) {
+    public ServiceResult deleteImage(Long id) {
         ServiceResult serviceResult = new ServiceResult();
         ImageHouse imageHouse = imageHouseRepository.findById(id).orElse(null);
         if (imageHouse == null) {
@@ -68,7 +68,7 @@ public class ImageServiceImpl implements ImageHouseService {
         return serviceResult;    }
 
     @Override
-    public ServiceResult updatePicture(ImageHouse imageHouse) {
+    public ServiceResult updateImage(ImageHouse imageHouse) {
         ServiceResult serviceResult = new ServiceResult();
         if (! imageHouseRepository.findById(imageHouse.getId()).isPresent()) {
             serviceResult.setMessage("Picture not found");

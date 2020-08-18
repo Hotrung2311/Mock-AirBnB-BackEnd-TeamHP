@@ -24,10 +24,11 @@ public class HouseController {
     private HouseService houseService;
     @Autowired
     private AccountService accountService;
-    @GetMapping("/")
-    public ResponseEntity<List<House>> getAllHouse(){
-        List<House> houses =houseService.findAll();
-        return ResponseEntity.ok(houses);
+
+    @GetMapping("/getHouseByHost")
+    public ResponseEntity<ServiceResult> getAllHouse(){
+//        houses =houseService.findAll();
+        return new ResponseEntity<ServiceResult>(houseService.findAllHouse(),HttpStatus.OK);
     }
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getHouseById( @PathVariable Long id){
@@ -39,34 +40,34 @@ public class HouseController {
         }
     }
 
+//    @PostMapping("/create")
+//    public ResponseEntity<ServiceResult> createApartment(@RequestBody Apartment apartment, Principal principal){
+//        System.out.println(apartment);
+//        String username = principal.getName();
+//        return new ResponseEntity<>(apartmentService.createApartment(apartment,username), HttpStatus.OK);
+//    }
 
     @PostMapping("/create")
-    public ResponseEntity<ServiceResult> createApartment(@RequestBody House house, Principal principal){
-        System.out.println(house);
-        String username = principal.getName();
-        return new ResponseEntity<ServiceResult>(houseService.createHouse(house,username), HttpStatus.OK);
+    public ResponseEntity<ServiceResult> createHouse(@RequestBody House house){
+        Optional<House> house1 = houseService.findByAddress(house.getAddress());
+        if (house1.isPresent()){
+            return new ResponseEntity<ServiceResult>(HttpStatus.BAD_REQUEST);
+        }else {
+            Optional<Account> account = accountService.findById(house.getAccount().getId());
+            List<Role> roles = account.get().getRoles();
+            if (roles.size()==1){
+                Role role = new Role();
+                role.setId((long) 3);
+                role.setName("host");
+                roles.add(role);
+                account.get().setRoles(roles);
+                accountService.save(account.get());
+            }
+            houseService.save(house);
+            return new ResponseEntity<ServiceResult>(HttpStatus.OK);
+        }
     }
 
-//    @PostMapping("/create")
-//    public ResponseEntity<?> createHouse(@RequestBody House house){
-//        Optional<House> house1 = houseService.findByAddress(house.getAddress());
-//        if (house1.isPresent()){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }else {
-//            Optional<Account> account = accountService.findById(house.getAccount().getId());
-//            List<Role> roles = account.get().getRoles();
-//            if (roles.size()==1){
-//                Role role = new Role();
-//                role.setId((long) 3);
-//                role.setName("host");
-//                roles.add(role);
-//                account.get().setRoles(roles);
-//                accountService.save(account.get());
-//            }
-//            houseService.save(house);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
-//    }
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editHouse(@PathVariable Long id){
         Optional<House> house = houseService.findById(id);
@@ -77,6 +78,7 @@ public class HouseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteHouse(@PathVariable Long id){
         Optional<House> house = houseService.findById(id);

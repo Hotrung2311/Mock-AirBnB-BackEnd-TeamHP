@@ -8,13 +8,14 @@ public interface ImageHouseService {
     void save(ImageHouse imageHouse);
     Iterable<ImageHouse> findAll();
 
-    ServiceResult createPicture(ImageHouse imageHouse);
+    // bang add
+    ServiceResult createImage(ImageHouse imageHouse);
 
     ServiceResult findAllImage();
 
     ServiceResult findById(Long id);
 
-    ServiceResult deletePicture(Long id);
+    ServiceResult deleteImage(Long id);
 
-    ServiceResult updatePicture(ImageHouse imageHouse);
+    ServiceResult updateImage(ImageHouse imageHouse);
 }

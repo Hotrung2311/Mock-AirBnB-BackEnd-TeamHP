@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 public class CityServiceImpl implements CityService {
     @Autowired
     private CityRepository cityRepository;
+
     @Override
     public City findCityByName(String name) {
-        return cityRepository.findByNameCity(name);
+        return null;
     }
 
     @Override
@@ -27,17 +28,21 @@ public class CityServiceImpl implements CityService {
         return cityRepository.findAll();
     }
 
+    // bang add
     @Override
     public ServiceResult createCity(City city) {
-        ServiceResult serviceResult = new ServiceResult();
-        serviceResult.setData(cityRepository.save(city));
-        return serviceResult;    }
+//        ServiceResult serviceResult = new ServiceResult();
+//        serviceResult.setData(cityService.save(city));
+        return null;
+    }
 
     @Override
     public ServiceResult findAllCity() {
         ServiceResult serviceResult = new ServiceResult();
         serviceResult.setData(cityRepository.findAll());
-        return serviceResult;    }
+        System.out.println(serviceResult);
+        return serviceResult;
+    }
 
     @Override
     public ServiceResult findById(Long id) {
@@ -47,7 +52,8 @@ public class CityServiceImpl implements CityService {
             serviceResult.setMessage("Province Not Found");
         }
         serviceResult.setData(city);
-        return serviceResult;    }
+        return null;
+    }
 
     @Override
     public ServiceResult deleteCity(Long id) {
@@ -59,7 +65,8 @@ public class CityServiceImpl implements CityService {
         } else {
             cityRepository.delete(city);
         }
-        return serviceResult;    }
+        return null;
+    }
 
     @Override
     public ServiceResult updateCity(City city) {
@@ -69,5 +76,6 @@ public class CityServiceImpl implements CityService {
         } else {
             serviceResult.setData(cityRepository.save(city));
         }
-        return serviceResult;    }
+        return serviceResult;
+    }
 }

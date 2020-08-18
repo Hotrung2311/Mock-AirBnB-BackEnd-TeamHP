@@ -7,6 +7,7 @@ public interface CityService {
     void save(City city);
     Iterable<City> findAll();
 
+    // bang add
 
     ServiceResult createCity(City city);
 

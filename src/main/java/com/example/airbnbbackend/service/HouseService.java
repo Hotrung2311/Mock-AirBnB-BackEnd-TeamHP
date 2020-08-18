@@ -1,11 +1,9 @@
 package com.example.airbnbbackend.service;
 
-import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.model.Address;
 import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.model.ImageHouse;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +19,6 @@ public interface HouseService {
     Optional<House> findById(Long id);
 
     Optional<House> findByAddress(Address address);
-
 
     // bang add
 
