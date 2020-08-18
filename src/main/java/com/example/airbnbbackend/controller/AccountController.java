@@ -5,6 +5,7 @@ import com.example.airbnbbackend.jwt.JwtService;
 import com.example.airbnbbackend.model.Account;
 import com.example.airbnbbackend.model.Role;
 import com.example.airbnbbackend.service.AccountService;
+import com.example.airbnbbackend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,8 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleService roleService;
 
 //    @Autowired
 //    public JavaMailSender emailSender;
@@ -42,19 +45,20 @@ public class AccountController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Optional<Account> currentUser = accountService.findAccountByUserName(account.getUsername());
-        return ResponseEntity.ok(new JwtResponse(jwt ,currentUser.get().getId() , userDetails.getUsername(),userDetails.getAuthorities()));
+        Account currentUser = accountService.findAccountByUserName(account.getUsername());
+        return ResponseEntity.ok(new JwtResponse(jwt ,currentUser.getId() , userDetails.getUsername(),userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Account account){
         String pass = account.getPassword();
-        Optional<Account> accounts1 = accountService.findAccountByUserName(account.getUsername());
-        if (accounts1.isEmpty()){
+        Account accounts1 = accountService.findAccountByUserName(account.getUsername());
+        if (accounts1 == null){
+            Role role = new Role();
+            role.setId((long) 2);
+            role.setName("user");
             List<Role> roles = new ArrayList<>();
-            roles.add(new Role( 1,"user"));
-            roles.add(new Role( 2,"customer"));
-            roles.add(new Role( 3,"PO"));
+            roles.add(role);
             account.setRoles(roles);
             account.setPassword(passwordEncoder.encode(account.getPassword()));
             accountService.save(account);
@@ -65,7 +69,7 @@ public class AccountController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return ResponseEntity.ok(new JwtResponse(jwt ,account.getId() , userDetails.getUsername(),userDetails.getAuthorities()));
         }else {
-            return (ResponseEntity<?>) ResponseEntity.unprocessableEntity();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
     @GetMapping("/profile/{id}")

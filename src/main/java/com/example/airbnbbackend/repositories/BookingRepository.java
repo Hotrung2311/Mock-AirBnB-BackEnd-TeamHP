@@ -20,4 +20,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Long> getCompareStartTimeList(Long id);
 
     List<Booking> findByHouse_Id(Long id);
+
+    List<Booking> findByAccount_Id(Long id);
 }
