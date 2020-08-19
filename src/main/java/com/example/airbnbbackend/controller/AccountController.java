@@ -81,4 +81,10 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/profile/edit")
+    public ResponseEntity<?> editProfile(@RequestBody Account account){
+        accountService.save(account);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
