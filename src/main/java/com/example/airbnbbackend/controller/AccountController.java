@@ -81,4 +81,11 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/profile/edit")
+    public ResponseEntity<?> editProfile(@RequestBody Account account){
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountService.save(account);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
