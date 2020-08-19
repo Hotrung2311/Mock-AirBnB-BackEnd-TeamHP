@@ -1,6 +1,7 @@
 package com.example.airbnbbackend.controller;
 
 import com.example.airbnbbackend.model.Booking;
+import com.example.airbnbbackend.model.BookingRequest;
 import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.service.BookingService;
 import com.example.airbnbbackend.service.HouseService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,26 +26,28 @@ public class BookingController {
     private HouseService houseService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBooking(@RequestBody Booking booking){
+    public ResponseEntity<?> createBooking(@RequestBody BookingRequest bookingRequest){
+        Booking booking = new Booking();
+        booking.setAccount(bookingRequest.getAccount());
+        booking.setHouse(bookingRequest.getHouse());
+        booking.setStartTime(new Date(bookingRequest.getStartTime()));
+        booking.setStopTime(new Date(bookingRequest.getEndTime()));
         int startTimeYear = booking.getStartTime().getYear();
         int stopTimeYear = booking.getStopTime().getYear();
-        int startTimeDay = booking.getStartTime().getDayOfYear();
-        int stopTimeDay = booking.getStopTime().getDayOfYear();
-        List<Booking> bookings = bookingService.findByHouse_Id(booking.getHouse().getId());
+        List<Booking> bookings = bookingService.findByHouse_Id(bookingRequest.getHouse().getId());
         if (bookings.size()!=0){
-            LocalDate date = java.time.LocalDate.now();
+            long date = System.currentTimeMillis();
             boolean checkTime = false;
-            if (date.getYear() <= booking.getStartTime().getYear()
-                    && date.getDayOfYear()<booking.getStartTime().getDayOfYear()){
+            if (date <= bookingRequest.getStartTime()){
                 if (startTimeYear==stopTimeYear){
-                    if (startTimeDay<stopTimeDay){
+                    if (bookingRequest.getStartTime()<bookingRequest.getEndTime()){
                         for (Booking value : bookings) {
                             if (startTimeYear == value.getStartTime().getYear()
                                     && stopTimeYear == value.getStopTime().getYear()) {
-                                if ((startTimeDay < value.getStartTime().getDayOfYear() &&
-                                        stopTimeDay < value.getStartTime().getDayOfYear()) ||
-                                        (startTimeDay > value.getStopTime().getDayOfYear() &&
-                                                stopTimeDay > value.getStopTime().getDayOfYear())) {
+                                if ((bookingRequest.getStartTime() < value.getStartTime().getTime() &&
+                                        bookingRequest.getEndTime() < value.getStartTime().getTime()) ||
+                                        (bookingRequest.getStartTime()  > value.getStopTime().getTime() &&
+                                                bookingRequest.getEndTime() > value.getStopTime().getTime())) {
                                     checkTime = true;
                                 } else {
                                     checkTime = false;
