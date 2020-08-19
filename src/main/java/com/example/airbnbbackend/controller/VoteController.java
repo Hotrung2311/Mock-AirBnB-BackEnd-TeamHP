@@ -22,9 +22,9 @@ public class VoteController {
     private VoteService voteService;
     @Autowired
     private HouseService houseService;
-    @PostMapping("/vote/create")
+    @PostMapping("/house/vote")
     public ResponseEntity<?> voteHouse(@RequestBody Vote vote){
-        Optional<Vote> vote1= voteService.findByAccount_id(vote.getAccount().getId());
+        Optional<Vote> vote1= voteService.findByAccount_idAndHouse_Id(vote.getAccount().getId(),vote.getHouse().getId());
 
         if (vote1.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

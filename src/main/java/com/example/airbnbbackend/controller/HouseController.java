@@ -1,9 +1,8 @@
 package com.example.airbnbbackend.controller;
 
-import com.example.airbnbbackend.model.Account;
-import com.example.airbnbbackend.model.House;
-import com.example.airbnbbackend.model.Role;
+import com.example.airbnbbackend.model.*;
 import com.example.airbnbbackend.service.AccountService;
+import com.example.airbnbbackend.service.CommentService;
 import com.example.airbnbbackend.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,8 @@ public class HouseController {
     @Autowired
     private HouseService houseService;
     @Autowired
+    private CommentService commentService;
+    @Autowired
     private AccountService accountService;
     @GetMapping("/")
     public ResponseEntity<?> getAllHouse(){
@@ -31,7 +32,21 @@ public class HouseController {
     public ResponseEntity<?> getHouseById( @PathVariable Long id){
         Optional<House> house = houseService.findById(id);
         if (house.isPresent()){
-            return ResponseEntity.ok(house.get());
+            HouseCommentVote houseCommentVote = new HouseCommentVote();
+            houseCommentVote.setAccount(house.get().getAccount());
+            houseCommentVote.setAddress(house.get().getAddress());
+            houseCommentVote.setBathroom(house.get().getBathroom());
+            houseCommentVote.setBedroom(house.get().getBedroom());
+            houseCommentVote.setCity(house.get().getCity());
+            houseCommentVote.setHouseType(house.get().getHouseType());
+            houseCommentVote.setId(house.get().getId());
+            houseCommentVote.setNameHouse(house.get().getNameHouse());
+            houseCommentVote.setPriceHouse(house.get().getPriceHouse());
+            houseCommentVote.setRoomType(house.get().getRoomType());
+            houseCommentVote.setVoteNumber(house.get().getVoteNumber());
+            List<Comment> comments = commentService.findByHouse_Id(house.get().getId());
+            houseCommentVote.setComments(comments);
+            return ResponseEntity.ok(houseCommentVote);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

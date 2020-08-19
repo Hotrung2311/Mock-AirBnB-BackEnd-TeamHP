@@ -10,6 +10,6 @@ public interface VoteService {
 
     List<Vote> findAll();
 
-    Optional<Vote> findByAccount_id(Long id);
+    Optional<Vote> findByAccount_idAndHouse_Id(Long account_id,Long house_id);
     List<Vote> findByHouse_id(Long id);
 }

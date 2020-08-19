@@ -24,9 +24,10 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Optional<Vote> findByAccount_id(Long id) {
-        return voteRepository.findByAccount_Id(id);
+    public Optional<Vote> findByAccount_idAndHouse_Id(Long account_id, Long house_id) {
+        return voteRepository.findByAccount_IdAndHouse_Id(account_id,house_id);
     }
+
 
     @Override
     public List<Vote> findByHouse_id(Long id) {
