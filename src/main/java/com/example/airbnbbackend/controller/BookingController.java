@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -85,10 +86,18 @@ public class BookingController {
        List<Booking> bookings = bookingService.findByAccount_Id(id);
        return ResponseEntity.ok(bookings);
    }
-   @PostMapping("/{id}")
+   @PostMapping("/delete/{id}")
     public ResponseEntity<?> deleteBooking(@PathVariable Long id){
-       bookingService.delete(id);
-       return new ResponseEntity<>(HttpStatus.OK);
+       Optional<Booking> booking = bookingService.findById(id);
+       if (booking.isPresent()){
+           long date = System.currentTimeMillis();
+           long day = (booking.get().getStartTime().getTime()-date)/86400000;
+           if (day>1){
+               bookingService.delete(id);
+               return new ResponseEntity<>(HttpStatus.OK);
+           }
+       }
+       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
    }
 
 }
