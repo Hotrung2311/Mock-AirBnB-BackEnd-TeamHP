@@ -9,6 +9,8 @@ import com.example.airbnbbackend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,8 +37,8 @@ public class AccountController {
     @Autowired
     private RoleService roleService;
 
-//    @Autowired
-//    public JavaMailSender emailSender;
+    @Autowired
+    public JavaMailSender emailSender;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account){
@@ -62,6 +64,13 @@ public class AccountController {
             account.setRoles(roles);
             account.setPassword(passwordEncoder.encode(account.getPassword()));
             accountService.save(account);
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(account.getEmail());
+            message.setSubject("Test Simple Email");
+            message.setText("Username: "+account.getUsername()+" password: "+account.getPassword());
+            this.emailSender.send(message);
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(account.getUsername(),pass));
             SecurityContextHolder.getContext().setAuthentication(authentication);
