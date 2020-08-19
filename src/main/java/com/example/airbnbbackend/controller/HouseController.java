@@ -38,11 +38,12 @@ public class HouseController {
     }
     @PostMapping("/create")
     public ResponseEntity<?> createHouse(@RequestBody House house){
-        Optional<House> house1 = houseService.findByAddress(house.getAddress());
-        if (house1.isPresent()){
+//        Optional<House> house1 = houseService.findByAddress(house.getAddress());
+        Optional<Account> account = accountService.findById(house.getAccount().getId());
+        if (account.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
-            Optional<Account> account = accountService.findById(house.getAccount().getId());
+//            Optional<Account> account = accountService.findById(house.getAccount().getId());
             List<Role> roles = account.get().getRoles();
             if (roles.size()==1){
                 Role role = new Role();

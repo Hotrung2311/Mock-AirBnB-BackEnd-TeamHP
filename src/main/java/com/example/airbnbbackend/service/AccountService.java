@@ -2,6 +2,7 @@ package com.example.airbnbbackend.service;
 
 import com.example.airbnbbackend.model.Account;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

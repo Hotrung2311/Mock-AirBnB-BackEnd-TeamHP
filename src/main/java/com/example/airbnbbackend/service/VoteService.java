@@ -1,6 +1,7 @@
 package com.example.airbnbbackend.service;
 
 import com.example.airbnbbackend.model.Vote;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

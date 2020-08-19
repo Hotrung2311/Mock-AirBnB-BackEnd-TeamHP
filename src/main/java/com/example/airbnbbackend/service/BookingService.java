@@ -3,6 +3,7 @@ package com.example.airbnbbackend.service;
 import com.example.airbnbbackend.model.Booking;
 import com.example.airbnbbackend.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
