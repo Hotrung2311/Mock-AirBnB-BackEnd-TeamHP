@@ -40,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Optional<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id) {
+    public List<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id) {
         return bookingRepository.findByAccount_IdAndHouse_Id(account_id,house_id);
     }
 

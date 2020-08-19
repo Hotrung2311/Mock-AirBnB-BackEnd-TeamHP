@@ -13,7 +13,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "select * from demo.booking where house_id = ?1",nativeQuery = true)
     List<Booking> findAccountByHomeInBookingTable(Long id);
 
-    Optional<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id);
+    List<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id);
 
     @Query(value = "SELECT  DATEDIFF(CURDATE(), demo.booking.start_time)" +
             "FROM demo.booking where house_id = ?1;",nativeQuery = true)

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,10 +21,10 @@ public class CommentController {
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping("/comment/create")
+    @PostMapping("/house/comment")
     public ResponseEntity<?> comment(@RequestBody Comment comment){
-        Optional<Booking> booking = bookingService.findByAccount_IdAndHouse_Id(comment.getAccount().getId(),comment.getHouse().getId());
-        if (booking.isPresent()){
+        List<Booking> booking = bookingService.findByAccount_IdAndHouse_Id(comment.getAccount().getId(),comment.getHouse().getId());
+        if (booking.size()>0){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             comment.setTimeComment(timestamp);
             commentService.save(comment);

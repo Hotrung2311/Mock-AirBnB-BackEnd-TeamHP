@@ -17,7 +17,7 @@ public interface BookingService {
 
     Optional<Booking> findById(Long id);
 
-    Optional<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id);
+    List<Booking> findByAccount_IdAndHouse_Id(Long account_id, Long house_id);
 
     List<Long> getCompareStartTimeList( Long id);
 
