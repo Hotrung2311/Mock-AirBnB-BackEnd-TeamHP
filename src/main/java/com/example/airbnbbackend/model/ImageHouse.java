@@ -10,6 +10,7 @@ public class ImageHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String imageUrl;
     private String imageName;
     @ManyToOne
     @JoinColumn(name = "house_id")

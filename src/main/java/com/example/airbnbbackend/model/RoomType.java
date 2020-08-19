@@ -1,6 +1,6 @@
 package com.example.airbnbbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,13 +8,13 @@ import java.util.List;
 
 @Entity
 @Data
-public class City {
+public class RoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nameCity;
+    private String name;
 
-    @OneToMany(mappedBy = "city")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "roomTypeList")
+    @JsonBackReference
     private List<House> houseList;
 }
