@@ -84,6 +84,7 @@ public class AccountController {
 
     @PutMapping("/profile/edit")
     public ResponseEntity<?> editProfile(@RequestBody Account account){
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountService.save(account);
         return new ResponseEntity<>(HttpStatus.OK);
     }
