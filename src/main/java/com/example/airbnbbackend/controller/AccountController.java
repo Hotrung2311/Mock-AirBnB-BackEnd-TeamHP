@@ -68,7 +68,7 @@ public class AccountController {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(account.getEmail());
             message.setSubject("Test Simple Email");
-            message.setText("Username: "+account.getUsername()+" password: "+account.getPassword());
+            message.setText("Username: "+account.getUsername()+" password: "+pass);
             this.emailSender.send(message);
 
             Authentication authentication = authenticationManager.authenticate(

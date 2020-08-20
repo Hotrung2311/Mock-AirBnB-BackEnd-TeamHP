@@ -22,14 +22,16 @@ public class CommentController {
     private BookingService bookingService;
 
     @PostMapping("/house/comment")
-    public ResponseEntity<?> comment(@RequestBody Comment comment){
-        List<Booking> booking = bookingService.findByAccount_IdAndHouse_Id(comment.getAccount().getId(),comment.getHouse().getId());
-        if (booking.size()>0){
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            comment.setTimeComment(timestamp);
-            commentService.save(comment);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+    public ResponseEntity<?> comment(@RequestBody Comment comment) {
+        if (!comment.getContentComment().equals("")) {
+            List<Booking> booking = bookingService.findByAccount_IdAndHouse_Id(comment.getAccount().getId(), comment.getHouse().getId());
+            if (booking.size() > 0) {
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                comment.setTimeComment(timestamp);
+                commentService.save(comment);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

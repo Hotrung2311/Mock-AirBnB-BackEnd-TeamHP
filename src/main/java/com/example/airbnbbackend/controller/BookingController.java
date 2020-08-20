@@ -86,7 +86,7 @@ public class BookingController {
        List<Booking> bookings = bookingService.findByAccount_Id(id);
        return ResponseEntity.ok(bookings);
    }
-   @PostMapping("/delete/{id}")
+   @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteBooking(@PathVariable Long id){
        Optional<Booking> booking = bookingService.findById(id);
        if (booking.isPresent()){
