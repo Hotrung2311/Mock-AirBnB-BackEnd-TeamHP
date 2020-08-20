@@ -1,11 +1,11 @@
 package com.example.airbnbbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Data
 public class City {
     @Id
@@ -13,7 +13,7 @@ public class City {
     private Long id;
     private String nameCity;
 
-//    @ManyToOne
-//    @JoinColumn(name = "country_id")
-//    private Country country;
+    @OneToMany(mappedBy = "city")
+    @JsonIgnore
+    private List<House> houseList;
 }

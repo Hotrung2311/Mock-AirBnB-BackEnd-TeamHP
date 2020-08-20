@@ -4,6 +4,8 @@ import com.example.airbnbbackend.model.*;
 import com.example.airbnbbackend.service.AccountService;
 import com.example.airbnbbackend.service.CommentService;
 import com.example.airbnbbackend.service.HouseService;
+import com.example.airbnbbackend.service.ImageHouseService;
+import com.example.airbnbbackend.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,10 @@ public class HouseController {
     private CommentService commentService;
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private ImageHouseService imageHouseService;
+
     @GetMapping("/")
     public ResponseEntity<?> getAllHouse(){
         List<House> houses =houseService.findAll();
@@ -67,10 +73,19 @@ public class HouseController {
                 account.get().setRoles(roles);
                 accountService.save(account.get());
             }
+
             houseService.save(house);
+            Optional<House> house2 = houseService.findByAddress(house.getAddress());
+            if (house2.isPresent()){
+                for (int i =0; i<house.getImageHouses().size(); i++){
+                    house.getImageHouses().get(i).setHouse(house2.get());
+                    imageHouseService.save(house.getImageHouses().get(i));
+                }
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editHouse(@PathVariable Long id){
         Optional<House> house = houseService.findById(id);
