@@ -5,6 +5,7 @@ import com.example.airbnbbackend.model.House;
 import com.example.airbnbbackend.model.Role;
 import com.example.airbnbbackend.service.AccountService;
 import com.example.airbnbbackend.service.HouseService;
+import com.example.airbnbbackend.service.ImageHouseService;
 import com.example.airbnbbackend.service.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,10 @@ public class HouseController {
     private HouseService houseService;
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private ImageHouseService imageHouseService;
+
     @GetMapping("/")
     public ResponseEntity<?> getAllHouse(){
         List<House> houses =houseService.findAll();
@@ -39,7 +44,6 @@ public class HouseController {
     }
     @PostMapping("/create")
     public ResponseEntity<?> createHouse(@RequestBody House house){
-        System.out.println(house.getCity());
         Optional<House> house1 = houseService.findByAddress(house.getAddress());
         if (house1.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,7 +58,15 @@ public class HouseController {
                 account.get().setRoles(roles);
                 accountService.save(account.get());
             }
+
             houseService.save(house);
+            Optional<House> house2 = houseService.findByAddress(house.getAddress());
+            if (house2.isPresent()){
+                for (int i =0; i<house.getImageHouses().size(); i++){
+                    house.getImageHouses().get(i).setHouse(house2.get());
+                    imageHouseService.save(house.getImageHouses().get(i));
+                }
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }

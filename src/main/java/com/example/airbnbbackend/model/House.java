@@ -17,30 +17,34 @@ public class House {
     private int bathroom;
     private double priceHouse;
     private double voteNumber;
-
-    @ManyToMany
-    @JoinTable(
-            name = "house_house_type",
-            joinColumns = @JoinColumn(name = "house_id"),
-            inverseJoinColumns = @JoinColumn(name = "house_type_id"))
-    private List<HouseType> houseTypeList;
-
-    @ManyToMany
-    @JoinTable(
-            name = "room_room_type",
-            joinColumns = @JoinColumn(name = "house_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_type_id"))
-    private List<RoomType> roomTypeList;
+    private String houseTypes;
+    private String roomTypes;
+    private String city;
 
     @OneToMany(mappedBy = "house")
-    private List<ImageHouse> imageHouseList;
+    private List<ImageHouse> imageHouses;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+//    @ManyToOne
+//    @JoinColumn(name = "city_id")
+//    private City city;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "house_house_type",
+//            joinColumns = @JoinColumn(name = "house_id"),
+//            inverseJoinColumns = @JoinColumn(name = "house_type_id"))
+//    private List<HouseType> houseTypeList;
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "room_room_type",
+//            joinColumns = @JoinColumn(name = "house_id"),
+//            inverseJoinColumns = @JoinColumn(name = "room_type_id"))
+//    private List<RoomType> roomTypeList;
+
 
 }
