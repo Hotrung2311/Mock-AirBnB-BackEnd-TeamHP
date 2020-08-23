@@ -8,6 +8,8 @@ import com.example.airbnbbackend.service.ServiceStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageServiceImpl implements ImageHouseService {
     @Autowired
@@ -21,6 +23,11 @@ public class ImageServiceImpl implements ImageHouseService {
     @Override
     public Iterable<ImageHouse> findAll() {
         return imageHouseRepository.findAll();
+    }
+
+    @Override
+    public List<ImageHouse> findAllByHouse_Id(Long id) {
+        return imageHouseRepository.findAllByHouse_Id(id);
     }
 
 //    @Override

@@ -43,13 +43,14 @@ public class HouseController {
             houseCommentVote.setAddress(house.get().getAddress());
             houseCommentVote.setBathroom(house.get().getBathroom());
             houseCommentVote.setBedroom(house.get().getBedroom());
-            houseCommentVote.setCity(house.get().getCity());
-            houseCommentVote.setHouseType(house.get().getHouseType());
+            houseCommentVote.setHouseType(house.get().getHouseTypes());
             houseCommentVote.setId(house.get().getId());
             houseCommentVote.setNameHouse(house.get().getNameHouse());
             houseCommentVote.setPriceHouse(house.get().getPriceHouse());
-            houseCommentVote.setRoomType(house.get().getRoomType());
+            houseCommentVote.setRoomType(house.get().getRoomTypes());
             houseCommentVote.setVoteNumber(house.get().getVoteNumber());
+            List<ImageHouse> imageHouses = imageHouseService.findAllByHouse_Id(id);
+            houseCommentVote.setImageHouses(imageHouses);
             List<Comment> comments = commentService.findByHouse_Id(house.get().getId());
             houseCommentVote.setComments(comments);
             return ResponseEntity.ok(houseCommentVote);
@@ -58,7 +59,7 @@ public class HouseController {
         }
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createHouse(@RequestBody House house){
+    public ResponseEntity<?> createHouse(@RequestBody HouseCommentVote house){
         Optional<House> house1 = houseService.findByAddress(house.getAddress());
         if (house1.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -73,12 +74,23 @@ public class HouseController {
                 account.get().setRoles(roles);
                 accountService.save(account.get());
             }
+            House house2 = new House();
+            house2.setAddress(house.getAddress());
+            house2.setAccount(house.getAccount());
+            house2.setVoteNumber(house.getVoteNumber());
+            house2.setBathroom(house.getBathroom());
+            house2.setBedroom(house.getBedroom());
+            house2.setCity(house.getCity());
+            house2.setHouseTypes(house.getHouseType());
+            house2.setNameHouse(house.getNameHouse());
+            house2.setPriceHouse(house.getPriceHouse());
+            house2.setRoomTypes(house.getRoomType());
 
-            houseService.save(house);
-            Optional<House> house2 = houseService.findByAddress(house.getAddress());
-            if (house2.isPresent()){
+            houseService.save(house2);
+            Optional<House> house3 = houseService.findByAddress(house.getAddress());
+            if (house3.isPresent()){
                 for (int i =0; i<house.getImageHouses().size(); i++){
-                    house.getImageHouses().get(i).setHouse(house2.get());
+                    house.getImageHouses().get(i).setHouse(house3.get());
                     imageHouseService.save(house.getImageHouses().get(i));
                 }
             }

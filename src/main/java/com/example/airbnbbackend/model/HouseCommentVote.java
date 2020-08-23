@@ -16,6 +16,7 @@ public class HouseCommentVote {
     String roomType;
     String houseType;
     private Account account;
-    private City city;
+    private String city;
     private List<Comment> comments;
+    private List<ImageHouse> imageHouses;
 }

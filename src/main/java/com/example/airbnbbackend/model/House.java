@@ -21,8 +21,8 @@ public class House {
     private String roomTypes;
     private String city;
 
-    @OneToMany(mappedBy = "house")
-    private List<ImageHouse> imageHouses;
+//    @OneToMany(mappedBy = "house")
+//    private List<ImageHouse> imageHouses;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
